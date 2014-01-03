@@ -2,8 +2,8 @@ require 'formula'
 
 class Mathgl < Formula
   homepage 'http://mathgl.sourceforge.net/'
-  url 'http://downloads.sourceforge.net/mathgl/mathgl-2.1.3.1.tar.gz'
-  sha1 '09a2cacc146c77c69d007579fc787ec3fb5019a2'
+  url 'http://downloads.sourceforge.net/mathgl/mathgl-2.2.tar.gz'
+  sha1 'd49feac659e33d11c0b5e4cd8ce5102924c168ac'
 
   option 'fltk',   'Build the fltk widget and mglview using X11'
   option 'qt4',    'Build the Qt widget, the udav gui, and mglview using Qt4'
@@ -26,8 +26,8 @@ class Mathgl < Formula
   def install
     args = std_cmake_args + %w[
       -Denable-glut=ON
-      -Denable-gsl=ON
       -Denable-jpeg=ON
+      -Denable-openmp=OFF
       -Denable-pthread=ON
       -Denable-pdf=ON
       -Denable-python=OFF
@@ -39,6 +39,7 @@ class Mathgl < Formula
     args << '-Denable-hdf5_18=ON' if build.include? 'hdf5'
     args << '-Denable-fltk=ON'    if build.include? 'fltk'
     args << '-Denable-wx=ON'      if build.include? 'wx'
+    args << '-Denable-gsl=ON'     if build.include? 'gsl'
     args << '..'
     rm 'ChangeLog' if File.exist? 'ChangeLog' # rm this problematic symlink.
     mkdir 'brewery' do
